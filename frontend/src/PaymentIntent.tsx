@@ -15,19 +15,21 @@ const CheckoutForm = () => {
     event.preventDefault();
     if (stripe && elements) {
       const cardElement = elements.getElement(CardElement);
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-        "client-secret",
-        {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              name: "Jenny Rosen"
+      if (cardElement) {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          "client-secret",
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: "Jenny Rosen"
+              }
             }
           }
-        }
-      );
-      console.info("error", error);
-      console.info("paymentIntent", paymentIntent);
+        );
+        console.info("error", error);
+        console.info("paymentIntent", paymentIntent);
+      }
     }
   };
 
