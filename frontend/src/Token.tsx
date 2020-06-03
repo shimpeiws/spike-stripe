@@ -16,26 +16,17 @@ const CheckoutForm = () => {
     if (stripe && elements) {
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-          "client-secret",
-          {
-            payment_method: {
-              card: cardElement,
-              billing_details: {
-                name: "Jenny Rosen"
-              }
-            }
-          }
-        );
+        const { error, token } = await stripe.createToken(cardElement);
         console.info("error", error);
-        console.info("paymentIntent", paymentIntent);
+        console.info("token", token);
+        // TODO: send token to server
       }
     }
   };
 
   return (
     <>
-      <h1>PaymentIntent</h1>
+      <h1>Token</h1>
       <form onSubmit={handleSubmit}>
         <CardElement />
         <button type="submit" disabled={!stripe}>
@@ -48,7 +39,7 @@ const CheckoutForm = () => {
 
 interface Props {}
 
-export function PaymentIntent(_: Props) {
+export function Token(_: Props) {
   return (
     <Elements stripe={initStripe()}>
       <CheckoutForm />
