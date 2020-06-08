@@ -23,3 +23,9 @@ chrome-user-data
 *.swp
 *.swo
 frontend/dist/js/*
+
+# Serverless directories
+.serverless
+
+# Webpack directories
+.webpack
